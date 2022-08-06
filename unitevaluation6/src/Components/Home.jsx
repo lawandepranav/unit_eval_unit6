@@ -3,7 +3,7 @@ import axios from "axios";
 import  { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../Redux/Auth/Action";
+import { addToCart } from "../Redux/Cart/Action";
 
 const Home = () => {
   const [products, setproducts] = useState([]);
@@ -19,19 +19,19 @@ const Home = () => {
         console.log(err);
       });
   }, []);
-    const handlelogin = (id) => {
+    const handleCart = (item) => {
     axios({
       method: "post",
       url: "http://localhost:8080/cart",
       data: {
-        product_id: id,
-        Quantity: 1,
+       item
       },
     }).then((res) => {
       console.log(res);
-      dispatch(loginSuccess(res.data));
+      dispatch(addToCart(res.data));
       console.log(res);
     });
+   
 }
   return (
     <div className="item_body" style={{width:"95%",margin:"auto", display:"grid",gridTemplateColumns:"repeat(3, 450px)",gap:'40px'}}>
@@ -47,7 +47,7 @@ const Home = () => {
             <div className="jss11">
               <img src={item.image} alt="" />
               <div style={{width:"100%"}}>
-                <Button  variant="outlined" onClick={() => handlelogin(item.id)} >Add to Cart</Button>
+                <Button  variant="outlined" onClick={() => handleCart(item)} >Add to Cart</Button>
                 <Button variant="outlined">More Details</Button>
               </div>
             </div>

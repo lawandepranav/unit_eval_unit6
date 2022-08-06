@@ -305,26 +305,5 @@
       "category": "homedecor"
     }
   ],
-  "cart": [
-    {
-      "id": 1,
-      "product_id": 40,
-      "quantity": 1
-    },
-    {
-      "product_id": 39,
-      "quantity": 3,
-      "id": 2
-    },
-    {
-      "product_id": 1,
-      "Quantity": 1,
-      "id": 3
-    },
-    {
-      "product_id": 1,
-      "Quantity": 1,
-      "id": 4
-    }
-  ]
+  "cart": []
 }

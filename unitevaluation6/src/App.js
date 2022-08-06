@@ -4,6 +4,7 @@ import { Route,Routes } from 'react-router-dom';
 import PrivateRoute from './Components/PrivateRoute';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
+import Cart from './Components/Cart';
 
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
       <Navbar/>
       <Routes>
       <Route path="/login" element={<Login/>} />
-      <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>} />
+      <Route path='/' element={<PrivateRoute ><Home /></PrivateRoute>} />
+      <Route path='/cart' element={<PrivateRoute ><Cart /></PrivateRoute>} />
       </Routes>
       
       
