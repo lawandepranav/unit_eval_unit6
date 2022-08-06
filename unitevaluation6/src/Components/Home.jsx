@@ -1,17 +1,61 @@
-import React from 'react'
-import { useFetchProducts } from '../Hooks/fetchproducts'
-import Mediacard from "./Card"
+import React from 'react';
+import axios from "axios";
+import  { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../Redux/Auth/Action";
 
- const Home = () => {
-  const{loading,error,data}=useFetchProducts("http://localhost:8000/products")
-  console.log(data)
+const Home = () => {
+  const [products, setproducts] = useState([]);
+    const dispatch = useDispatch();
 
-
-
-  return (
-     loading? <h1>......Loading</h1>
-     : error ?<h1>Something Went Wrong</h1>
-     :data.map(item=> <Mediacard key={item.id} {...item}/>)
-  )
+  useEffect(() => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/products",
+    })
+      .then((res) => setproducts(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+    const handlelogin = (id) => {
+    axios({
+      method: "post",
+      url: "http://localhost:8080/cart",
+      data: {
+        product_id: id,
+        Quantity: 1,
+      },
+    }).then((res) => {
+      console.log(res);
+      dispatch(loginSuccess(res.data));
+      console.log(res);
+    });
 }
+  return (
+    <div className="item_body" style={{width:"95%",margin:"auto", display:"grid",gridTemplateColumns:"repeat(3, 450px)",gap:'40px'}}>
+      {products?.map((item) => (
+        <div  key={item.id}>
+          <div >
+            <div >
+              <p>Brand: {item.brand}</p>
+              <p>Title: {item.title}</p>
+              <p>Category: {item.category} </p>
+              <p>Price: {item.price} </p>
+            </div>
+            <div className="jss11">
+              <img src={item.image} alt="" />
+              <div style={{width:"100%"}}>
+                <Button  variant="outlined" onClick={() => handlelogin(item.id)} >Add to Cart</Button>
+                <Button variant="outlined">More Details</Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default Home;

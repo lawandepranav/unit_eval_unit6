@@ -47,6 +47,7 @@ import { Navigate } from "react-router-dom";
 
     return(
         <Box
+        style={{display:"flex"}}
      component="form"
       sx={{
         '& > :not(style)': { m: 1, width: '25ch' },
@@ -55,7 +56,7 @@ import { Navigate } from "react-router-dom";
       autoComplete="off"
     >
      {
-        Object.keys(loginData).map((el)=><TextField key={el} id={el} value={loginData[el]} name={el} onChange={handleChange} label={el.toLocaleUpperCase()} variant="outlined" />)
+        Object.keys(loginData).map((el)=><TextField style={{display:"flex"}} key={el} id={el} value={loginData[el]} name={el} onChange={handleChange} label={el.toLocaleUpperCase()} variant="outlined" />)
      }
      <Button   onClick={handleLogin} variant="contained">Login</Button>
    

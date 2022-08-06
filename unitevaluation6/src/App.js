@@ -1,13 +1,21 @@
 import React from 'react';
-import Navbar from "./Components/Navbar"
-import Pages from './Components/Pages/Pages'
+import Login from './Components/Pages/Login';
+import { Route,Routes } from 'react-router-dom';
+import PrivateRoute from './Components/PrivateRoute';
+import Navbar from './Components/Navbar';
+import Home from './Components/Home';
+
 
 function App() {
   return (
     <div className="App">
       <Navbar/>
-      <Pages/>
-     
+      <Routes>
+      <Route path="/login" element={<Login/>} />
+      <Route path='/' element={<PrivateRoute><Home /></PrivateRoute>} />
+      </Routes>
+      
+      
     </div>
   );
 }

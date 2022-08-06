@@ -1,47 +1,47 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import styled from "styled-components"
+import React from 'react'
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import { Link } from "react-router-dom";
+import { useSelector,useDispatch } from "react-redux";
+import { logoutSuccess } from "../Redux/Auth/Action";
+
+const Navbar = () => {
 
 
-const NavBar=styled.div`
-width:100%;
-margin:auto;
-display:flex;
-justify-content:space-around;
-background-color:black;
+  const token = useSelector((state) => state.auth.token);
 
-`
-const Navtabs=styled.button`
-color:white;
-font-size:25px;
-font-weight:600;
-padding:20px;
-background-color:transparent;
-border:none;
-text-align:center;
-:hover{
-    cursor:pointer;
-}
-`
-
-const Navbar=()=>{
-
-    return(
-        <>
-        <NavBar>
-            <Navtabs onClick={()=>Navigate("/")}>Home</Navtabs>
-            <Navtabs onClick={()=>Navigate("/login")}>Login</Navtabs>
-            <Navtabs onClick={()=>Navigate("/cart")}>Cart</Navtabs>
-            
-        </NavBar>
-        </>
-    )
-}
+  const dispatch = useDispatch();
+  const handlelogout = () => {
+    dispatch(logoutSuccess());
+  };
+  return (
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, padding:"20px", gap:"100px" }}>
+            <Link style={{color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600"}} to={"/"}>Home</Link>
+            <Link style={{color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600"}} to={"/cart"}>Cart</Link>
+          </Box>
+          {token ? (
+            <Box
+              onClick={handlelogout}
+              style={{ cursor: "pointer",color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600" }}
+              sx={{ flexGrow: 0 }}
+            >
+              Logout
+            </Box>
+          ) : (
+            <Link style={{color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600"}} to="/login">
+              <Box style={{ cursor: "pointer" }} sx={{ flexGrow: 0 }}>
+                Login
+              </Box>
+            </Link>
+          )}
+        </Toolbar>
+      </Container>
+    </AppBar>
+  );
+};
 export default Navbar;
-
-
-
-
-
-
-
