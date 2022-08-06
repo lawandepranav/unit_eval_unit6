@@ -3,7 +3,7 @@ import { useFetchProducts } from '../Hooks/fetchproducts'
 import Mediacard from "./Card"
 
  const Home = () => {
-  const{loading,error,data}=useFetchProducts("http://localhost:8080/products")
+  const{loading,error,data}=useFetchProducts("http://localhost:8000/products")
   console.log(data)
 
 
