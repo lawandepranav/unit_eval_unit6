@@ -3,7 +3,8 @@ import axios from "axios";
 import  { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../Redux/Cart/Action";
+// import {  } from "../Redux/Cart/Action";
+import { AddCart } from '../Redux/Cart/Action';
 
 const Home = () => {
   const [products, setproducts] = useState([]);
@@ -26,12 +27,12 @@ const Home = () => {
       data: {
        item
       },
-    }).then((res) => {
-      console.log(res);
-      dispatch(addToCart(res.data));
-      console.log(res);
+    }).then((res) => { 
+      dispatch(AddCart(res.data))
+      console.log(res)
     });
    
+  
 }
   return (
     <div className="item_body" style={{width:"95%",margin:"auto", display:"grid",gridTemplateColumns:"repeat(3, 450px)",gap:'40px'}}>

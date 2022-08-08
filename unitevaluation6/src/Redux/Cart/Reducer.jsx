@@ -1,60 +1,85 @@
-import { ADD_TO_CART, REMOVE_FROM_CART,SUB_QUANTITY,ADD_QUANTITY,EMPTY_CART} from "./ActionType"
+import {GET_ALL_PRODUCT,GET_NUMBER_CART,ADD_CART, DECREASE_QUANTITY, INCREASE_QUANTITY, DELETE_CART } from "./ActionType"
 
 
+const initProduct = {
+  numberCart:0,
+  Carts:[],
+  _products:[]
+}
 
-const initialState = {
-  products: [],
-};
-const ShoppinReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ADD_TO_CART:
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.id === action.id ? {...product, selected: true} : product,
-        ),
-      };
-    case REMOVE_FROM_CART:
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.id === action.id
-            ? {...product, selected: false, quantity: 1}
-            : product,
-        ),
-      };
-    case ADD_QUANTITY:
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.id === action.id
-            ? {...product, quantity: product.quantity + 1}
-            : product,
-        ),
-      };
-    case SUB_QUANTITY:
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.id === action.id
-            ? {
-                ...product,
-                quantity: product.quantity !== 1 ? product.quantity - 1 : 1,
+export const reducer=(state = initProduct,action)=>{
+  switch(action.type){
+      case GET_ALL_PRODUCT: 
+          return{
+              ...state,
+              _products:action.payload
+          }
+      case GET_NUMBER_CART:
+              return{
+                  ...state
               }
-            : product,
-        ),
-      };
-    case EMPTY_CART:
-      return {
-        ...state,
-        products: state.products.map(product =>
-          product.selected
-            ? {...product, selected: false, quantity: 1}
-            : product,
-        ),
-      };
-    default:
-      return state;
+      case ADD_CART:
+          if(state.numberCart==0){
+              let cart = {
+                  id:action.payload.id,
+                  quantity:1,
+                  name:action.payload.name,
+                  image:action.payload.image,
+                  price:action.payload.price
+              } 
+              state.Carts.push(cart); 
+          }
+          else{
+              let check = false;
+              state.Carts.map((item,key)=>{
+                  if(item.id==action.payload.id){
+                      state.Carts[key].quantity++;
+                      check=true;
+                  }
+              });
+              if(!check){
+                  let _cart = {
+                      id:action.payload.id,
+                      quantity:1,
+                      name:action.payload.name,
+                      image:action.payload.image,
+                      price:action.payload.price
+                  }
+                  state.Carts.push(_cart);
+              }
+          }
+          return{
+              ...state,
+              numberCart:state.numberCart+1
+          }
+          case INCREASE_QUANTITY:
+              state.numberCart++
+              state.Carts[action.payload].quantity++;
+            
+             return{
+                 ...state
+             }
+          case DECREASE_QUANTITY:
+              let quantity = state.Carts[action.payload].quantity;
+              if(quantity>1){
+                  state.numberCart--;
+                  state.Carts[action.payload].quantity--;
+              }
+            
+              return{
+                  ...state
+              }
+          case DELETE_CART:
+              let quantity_ = state.Carts[action.payload].quantity;
+              return{
+                  ...state,
+                  numberCart:state.numberCart - quantity_,
+                  Carts:state.Carts.filter(item=>{
+                      return item.id!=state.Carts[action.payload].id
+                  })
+                 
+              }
+      default:
+          return state;
   }
-};
-export {ShoppinReducer};
+}

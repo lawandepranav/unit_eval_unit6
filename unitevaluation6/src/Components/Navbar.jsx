@@ -18,8 +18,8 @@ const Navbar = () => {
   };
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Container>
+        <Toolbar >
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, padding:"20px", gap:"100px" }}>
             <Link style={{color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600"}} to={"/"}>Home</Link>
             <Link style={{color:"white",textDecoration:"none",fontSize:"20px",fontWeight:"600"}} to={"/cart"}>Cart</Link>

@@ -5,6 +5,7 @@ import PrivateRoute from './Components/PrivateRoute';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Cart from './Components/Cart';
+import Payment from './Components/Payment';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <Navbar/>
       <Routes>
       <Route path="/login" element={<Login/>} />
-      <Route path='/' element={<PrivateRoute ><Home /></PrivateRoute>} />
+      <Route path='/' element={<Payment />} />
       <Route path='/cart' element={<PrivateRoute ><Cart /></PrivateRoute>} />
       </Routes>
       
