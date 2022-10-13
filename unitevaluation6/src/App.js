@@ -6,6 +6,7 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Cart from './Components/Cart';
 import Payment from './Components/Payment';
+import LastPage from './Components/LastPage';
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
       <Routes>
       <Route path="/login" element={<Login/>} />
       <Route path='/' element={<Payment />} />
+      <Route path='/ontheway' element={<LastPage />} />
       <Route path='/cart' element={<PrivateRoute ><Cart /></PrivateRoute>} />
       </Routes>
       

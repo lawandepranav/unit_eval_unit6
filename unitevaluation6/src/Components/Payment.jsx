@@ -7,7 +7,7 @@ import CurrencyRupeeOutlinedIcon from "@mui/icons-material/CurrencyRupeeOutlined
 import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
 // import { useSelector } from 'react-redux';
 // import Confirmation from "./Confirmation";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const CheckButtonPayCard = styled.button`
   height: 50px;
   line-height: 50px;
@@ -75,8 +75,10 @@ const Method = styled.button`
   color: #686b78;
   font-weight: 500;
   font-size: 16px;
-  transition: color 0.25s ease-in-out;
   padding-right: 15px;
+  ::hover{
+    color:black;
+  }
 `;
 const Buttonpay = styled.button`
   max-width: 142px;
@@ -117,7 +119,6 @@ const CardInput = styled.input`
   box-shadow: none;
   box-sizing: border-box;
   border-radius: 0;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
@@ -163,9 +164,19 @@ const Payment = () => {
   const [cardNumber, setCardNumber] = React.useState("")
   const [cvv, setCvv] = React.useState("")
   const [cardName, setCardName] = React.useState("")
+  const [expiry, setExpiry]=React.useState("")
+  
+const nav = useNavigate();
+
+  const handleExpiryDate = date => {
+    setExpiry({
+      value: date
+    });
+  };
 
   function handlePayment(e){
     e.preventDefault();
+    nav("/ontheway");
 
   }
 
@@ -201,7 +212,7 @@ const Payment = () => {
               </div>
             </div>
             <div>
-              <Buttonpay>Pay ₹250</Buttonpay>
+              <Buttonpay onClick={handlePayment}>Pay ₹250</Buttonpay>
             </div>
           </Walletmaindiv>
           <Walletmaindiv>
@@ -492,8 +503,9 @@ const Payment = () => {
                         }}
                       >
                         <CardInput
-                          type="number"
+                          type="text"
                           placeholder="Card Number"
+                         
                         />
                         <TempWrapper></TempWrapper>
                       
@@ -512,10 +524,11 @@ const Payment = () => {
                         }}
                       >
                         <CardInput
-                          type="text"
-                          value=""
-                          placeholder="Valid Through (MM/YY)"
-                           
+                           placeholder="Valid through(MM/YY)"
+                            onChange={date => handleExpiryDate(date)}
+                            value={expiry}
+                            disabled={false}
+                            onBlur={date => handleExpiryDate(date)}
                         />
 
                        
@@ -530,6 +543,7 @@ const Payment = () => {
                         <CardInput
                           type="number"
                         placeholder="CVV"
+                      
                         />
                       </div>
                     </div>
@@ -547,6 +561,7 @@ const Payment = () => {
                         <CardInput
                           type="text"
                          placeholder="Name On Card"
+                        
                         />
                         <TempWrapper></TempWrapper>
                        
@@ -798,7 +813,7 @@ const Payment = () => {
                       Securely save this card for a faster checkout next time.
                     </div>
                   </div>
-                  <CheckButtonPayCard>Pay ₹250</CheckButtonPayCard>
+                  <CheckButtonPayCard onClick={handlePayment}>Pay ₹250</CheckButtonPayCard>
                   <div
                     style={{
                       margin: " -22px 0 30px",
@@ -868,7 +883,7 @@ const Payment = () => {
                     online payments for contactless delivery
                   </div>
                 </div>
-                <CheckButtonPayCard>Pay ₹237</CheckButtonPayCard>
+                <CheckButtonPayCard onClick={handlePayment}>Pay ₹237</CheckButtonPayCard>
               </div>
             </div>
           </div>
@@ -911,10 +926,14 @@ const Payment = () => {
 
   return (
     <>
+    
       <Title>Choose payment method</Title>
       <div style={{display:"flex"}}>
         <Wrapper>
-          <MethodWrapper>
+          <MethodWrapper style={{
+          backgroundColor: wallet ? 'white' : 'transparent',
+          
+        }}>
             <AccountBalanceWalletIcon
               style={{
                 color: " #686b78",
@@ -922,9 +941,13 @@ const Payment = () => {
                 margin: "0 15px",
               }}
             />
-            <Method onClick={handleWallet}>Wallets</Method>
+            <Method  
+         onClick={handleWallet}>Wallets</Method>
           </MethodWrapper>
-          <MethodWrapper>
+          <MethodWrapper style={{
+          backgroundColor: cards ? 'white' : 'transparent',
+          
+        }}>
             <CreditCardOutlinedIcon
               style={{
                 color: " #686b78",
@@ -934,9 +957,13 @@ const Payment = () => {
             />
             <Method onClick={handleCard}>Credit & Debit cards</Method>{" "}
           </MethodWrapper>
-          <MethodWrapper>
+          <MethodWrapper style={{
+          backgroundColor: sodexo ? 'white' : 'transparent',
+          color: sodexo? "black":""
+        }}>
             <CreditCardOutlinedIcon
               style={{
+                color: sodexo ? "black":"none",
                 color: " #686b78",
                 fontSize: "17px",
                 margin: "0 15px",
@@ -944,7 +971,11 @@ const Payment = () => {
             />
             <Method onClick={handleSodex}>Sodexo</Method>{" "}
           </MethodWrapper>
-          <MethodWrapper>
+          <MethodWrapper style={{
+          backgroundColor: cash ? 'white' : 'transparent',
+          color: cash? "black":""
+          
+        }}>
             <CurrencyRupeeOutlinedIcon
               style={{
                 color: " #686b78",
@@ -965,7 +996,7 @@ const Payment = () => {
           ) : cash ? (
             <Cash />
           ) : (
-            <div></div>
+            <Wallet/>
           )}
         </div>
       </div>

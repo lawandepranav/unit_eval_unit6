@@ -8,13 +8,7 @@ const Cart=()=>{
     let ListCart = [];
     let TotalCart=0;
     console.log(TotalCart)
-    // Object.keys(items.Carts).forEach(function(item){
-    //     TotalCart+=items.Carts[item].quantity * items.Carts[item].price;
-    //     ListCart.push(items.Carts[item]);
-    // });
-    // function TotalPrice(price,tonggia){
-    //     return Number(price * tonggia).toLocaleString('en-US');
-    // }
+  
     const [status, setStatus]=React.useState("")
     const [products, setProducts]=React.useState({})
     const { loading, error, data } = products;
